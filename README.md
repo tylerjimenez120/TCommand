@@ -1,15 +1,15 @@
 # Command Design Pattern Lab — Embedded Actuator Controller
 
-[TODO: implementar en la Parte 13]
+[TODO: complete in Part 13]
 
-Este lab demuestra el patrón Command aplicado a un controlador
-embebido de actuadores (motor stepper + relé) con:
+This lab demonstrates the Command pattern applied to an embedded actuator
+controller (stepper motor + relay) featuring:
 
-  - Cola FIFO thread-safe
-  - Retry con backoff exponencial
-  - Stack de undo acotado
-  - Variante heap-free con std::variant
-  - Hardware Abstraction Layer portable a ESP32/STM32
+  - Thread-safe FIFO queue
+  - Retry with exponential backoff
+  - Bounded undo stack
+  - Heap-free variant using std::variant
+  - Hardware Abstraction Layer portable to ESP32/STM32
 
 ---
 
