@@ -31,9 +31,9 @@ class IHardwareAbstraction {
     IHardwareAbstraction() = default;
     virtual ~IHardwareAbstraction() = default;
 
-    // No copying or moving: HAL instances represent a singleton-like
-    // resource (the actual hardware). Copying would create two objects
-    // claiming to own the same registers, which is meaningless.
+    // No copying or moving: HAL instances own a hardware resource (a set of
+    // registers, a peripheral). Copying would create two objects claiming
+    // ownership of the same hardware, which is meaningless.
     IHardwareAbstraction(const IHardwareAbstraction&) = delete;
     IHardwareAbstraction& operator=(const IHardwareAbstraction&) = delete;
     IHardwareAbstraction(IHardwareAbstraction&&) = delete;
@@ -52,7 +52,7 @@ class IHardwareAbstraction {
      * @param addr Register address.
      * @return Value read. Errors are signalled by side-channel (e.g. flag).
      */
-    virtual uint32_t readRegister(uint32_t addr) = 0;
+    virtual uint32_t readRegister(uint32_t addr) const = 0;
 
     /**
      * @brief Block the calling thread/task for @p ms milliseconds.

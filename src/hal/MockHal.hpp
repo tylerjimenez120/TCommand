@@ -41,16 +41,16 @@ class MockHal final : public IHardwareAbstraction {
     bool writeRegister(uint32_t addr, uint32_t value) override {
         std::lock_guard<std::mutex> lock(mutex_);
         ++write_count_;
-        if (writes_to_fail_ > 0) {
-            --writes_to_fail_;
-            ++failed_writes_;
+        if (pending_failures > 0) {
+            --pending_failures;
+            ++total_failures_;
             return false;
         }
         registers_[addr] = value;
         return true;
     }
 
-    uint32_t readRegister(uint32_t addr) override {
+    uint32_t readRegister(uint32_t addr) const override {
         std::lock_guard<std::mutex> lock(mutex_);
         auto it = registers_.find(addr);
         return (it == registers_.end()) ? 0u : it->second;
@@ -74,7 +74,7 @@ class MockHal final : public IHardwareAbstraction {
     /// Force the next @p n writeRegister calls to fail.
     void injectWriteFailures(uint32_t n) {
         std::lock_guard<std::mutex> lock(mutex_);
-        writes_to_fail_ = n;
+        pending_failures = n;
     }
 
     /// Total number of writeRegister() calls (success + failed).
@@ -86,15 +86,15 @@ class MockHal final : public IHardwareAbstraction {
     /// Number of writeRegister() calls that returned false.
     uint32_t failedWriteCount() const {
         std::lock_guard<std::mutex> lock(mutex_);
-        return failed_writes_;
+        return total_failures_;
     }
 
  private:
     mutable std::mutex mutex_;
     std::unordered_map<uint32_t, uint32_t> registers_;
-    uint32_t writes_to_fail_{0};
+    uint32_t pending_failures{0};
     uint32_t write_count_{0};
-    uint32_t failed_writes_{0};
+    uint32_t total_failures_{0};
     double time_scale_;
     std::chrono::steady_clock::time_point start_;
 };

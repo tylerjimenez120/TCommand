@@ -1,0 +1,14 @@
+build/
+.vscode/
+.idea/
+*.o
+*.obj
+*.exe
+*.out
+*.log
+compile_commands.json
+.cache/
+
+# Doxygen output
+docs/html/
+docs/latex/
