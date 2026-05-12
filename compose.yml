@@ -1,0 +1,9 @@
+services:
+  tcommand:
+    build: .
+    container_name: tcommand
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    tty: true
+    stdin_open: true
