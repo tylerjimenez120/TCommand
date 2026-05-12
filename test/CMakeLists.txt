@@ -12,10 +12,12 @@ FetchContent_MakeAvailable(googletest)
 # Single test binary aggregating all test files
 add_executable(test_suite
     test_mock_hal.cpp
+    test_command_queue.cpp
+    test_undo_stack.cpp
 )
 
 target_link_libraries(test_suite PRIVATE
-    tcommand_hal
+    tcommand
     GTest::gtest_main
     GTest::gmock
 )
