@@ -14,6 +14,7 @@ add_executable(test_suite
     test_mock_hal.cpp
     test_command_queue.cpp
     test_undo_stack.cpp
+    test_executor_retry.cpp
 )
 
 target_link_libraries(test_suite PRIVATE
