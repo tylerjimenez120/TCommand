@@ -15,6 +15,7 @@ add_executable(test_suite
     test_command_queue.cpp
     test_undo_stack.cpp
     test_executor_retry.cpp
+    test_stepper_command.cpp
 )
 
 target_link_libraries(test_suite PRIVATE
