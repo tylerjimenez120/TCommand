@@ -8,29 +8,11 @@
 
 #include "tcommand/ICommand.hpp"
 #include "tcommand/UndoStack.hpp"
+#include "TestHelpers.hpp"
 
-namespace {
+using tcommand::test::FakeCommand;
 
-/// Minimal fake command tagged with an id for verifying LIFO order.
-class FakeCommand final : public tcommand::ICommand {
- public:
-    explicit FakeCommand(int id) : id_{id} {}
 
-    tcommand::CommandStatus execute() override {
-        return tcommand::CommandStatus::Success;
-    }
-    tcommand::CommandStatus undo() override {
-        return tcommand::CommandStatus::Success;
-    }
-    std::string_view name() const noexcept override { return "Fake"; }
-
-    int id() const noexcept { return id_; }
-
- private:
-    int id_;
-};
-
-}  // namespace
 
 TEST(UndoStackTest, LifoOrder) {
     tcommand::UndoStack s{8};

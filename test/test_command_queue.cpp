@@ -12,29 +12,10 @@
 
 #include "tcommand/CommandQueue.hpp"
 #include "tcommand/ICommand.hpp"
+#include "TestHelpers.hpp"
 
-namespace {
+using tcommand::test::FakeCommand;
 
-/// Minimal fake command used to verify queue ordering by id.
-class FakeCommand final : public tcommand::ICommand {
- public:
-    explicit FakeCommand(int id) : id_{id} {}
-
-    tcommand::CommandStatus execute() override {
-        return tcommand::CommandStatus::Success;
-    }
-    tcommand::CommandStatus undo() override {
-        return tcommand::CommandStatus::Success;
-    }
-    std::string_view name() const noexcept override { return "Fake"; }
-
-    int id() const noexcept { return id_; }
-
- private:
-    int id_;
-};
-
-}  // namespace
 
 TEST(CommandQueueTest, PushPopFifoOrder) {
     tcommand::CommandQueue q{8};
